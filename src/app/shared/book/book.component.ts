@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BookshelfService } from 'src/app/bookshelf/bookshelf.service';
 import { Book } from './book.model';
 
 @Component({
@@ -8,15 +9,14 @@ import { Book } from './book.model';
 })
 export class BookComponent implements OnInit {
   @Input() book: Book;
-  @Output() bookSelected = new EventEmitter<void>();
 
-  constructor() { }
+  constructor(private bookshelfService: BookshelfService) { }
 
   ngOnInit(): void {
   }
 
   onBookSelected() {
-    this.bookSelected.emit();
+    this.bookshelfService.bookSelected.emit(this.book);
   }
 
 }

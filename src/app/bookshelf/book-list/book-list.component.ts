@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { Book } from "../../shared/book/book.model";
+import { BookshelfService } from '../bookshelf.service';
 
 @Component({
   selector: 'app-book-list',
@@ -8,20 +9,19 @@ import { Book } from "../../shared/book/book.model";
 })
 export class BookListComponent implements OnInit {
   @Output() currentBookSelected = new EventEmitter<Book>();
-  myBooks: Book[] = [
-    new Book("Book of Testing", "Nolan", "Mystery", "https://source.unsplash.com/50x50/?mystery,book"),
-    new Book("Another Book", "Jacob", "Fiction", 'https://source.unsplash.com/50x50/?fiction,book'),
-    new Book("A Third Book", "Some Guy", "Non-fiction", 'https://source.unsplash.com/50x50/?book')
-  ]
+  myBooks: Book[] = []
 
-  constructor() { }
+  constructor(private bookshelfService: BookshelfService) { }
 
   ngOnInit(): void {
+    this.myBooks = this.bookshelfService.getBooks();
+
+    this.bookshelfService.bookListChanged.subscribe((books: Book[]) => {
+      this.myBooks = books;
+    })
   }
 
-  handleBookSelected(book: Book) {
-    console.log('booklist:', book);
-    this.currentBookSelected.emit(book);
+  onRemoveBook (idx: number) {
+    this.bookshelfService.removeBook(idx);
   }
-
 }
