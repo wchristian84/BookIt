@@ -33,4 +33,7 @@ bookListChanged = new EventEmitter<Book[]>();
     this.bookListChanged.emit(this.myBooks.slice());
   }
 
+  getBook(idx: number) {
+    return this.myBooks.slice()[idx];
+  }
 }
