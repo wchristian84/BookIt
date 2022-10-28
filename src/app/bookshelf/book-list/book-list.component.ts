@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
 import { Book } from "../../shared/book/book.model";
 import { BookshelfService } from '../bookshelf.service';
@@ -8,7 +8,7 @@ import { BookshelfService } from '../bookshelf.service';
   templateUrl: './book-list.component.html',
   styleUrls: ['./book-list.component.css']
 })
-export class BookListComponent implements OnInit {
+export class BookListComponent implements OnInit, OnDestroy {
   @Output() currentBookSelected = new EventEmitter<Book>();
   myBooks: Book[] = []
 
@@ -28,5 +28,8 @@ export class BookListComponent implements OnInit {
 
   onRemoveBook (idx: number) {
     this.bookshelfService.removeBook(idx);
+  }
+  ngOnDestroy(): void {
+
   }
 }

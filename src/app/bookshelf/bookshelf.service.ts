@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
+import { Subject, Subscription } from "rxjs";
 import { Book } from "../shared/book/book.model";
 
 @Injectable({
@@ -8,11 +8,10 @@ import { Book } from "../shared/book/book.model";
 export class BookshelfService {
 bookSelected = new Subject<Book>();
 bookListChanged = new Subject<Book[]>();
+bookListSub = new Subscription();
 
   private myBooks: Book[] = [
-    new Book("Book of Testing", "Nolan", "Mystery", "https://source.unsplash.com/50x50/?mystery,book"),
-    new Book("Another Book", "Jacob", "Fiction", 'https://source.unsplash.com/50x50/?fiction,book'),
-    new Book("A Third Book", "Some Guy", "Non-fiction", 'https://source.unsplash.com/50x50/?book')
+
   ];
 
   //Read
@@ -36,5 +35,18 @@ bookListChanged = new Subject<Book[]>();
 
   getBook(idx: number) {
     return this.myBooks.slice()[idx];
+  }
+
+  setBooks(books: Book[]) {
+    console.log("Books: ", books);
+
+    this.myBooks = books || [];
+
+    this.bookListChanged.next(this.myBooks.slice());
+  }
+
+  updateBook(idx: number, updatedBook: Book) {
+    this.myBooks[idx] = updatedBook;
+    this.bookListChanged.next(this.myBooks.slice());
   }
 }

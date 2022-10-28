@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { BookshelfComponent } from './bookshelf/bookshelf.component';
@@ -15,6 +17,9 @@ import { DropdownDirective } from './shared/directives/dropdown.directive';
 import { BookshelfHomeComponent } from './bookshelf/bookshelf-home/bookshelf-home.component';
 import { BookEditorComponent } from './bookshelf/book-editor/book-editor.component';
 import { NotificationComponent } from './shared/notification/notification.component';
+
+import { SortBooksPipe } from './shared/pipes/sortBooks.pipe';
+
 
 
 @NgModule({
@@ -31,11 +36,15 @@ import { NotificationComponent } from './shared/notification/notification.compon
     DropdownDirective,
     BookshelfHomeComponent,
     BookEditorComponent,
-    NotificationComponent
+    NotificationComponent,
+    SortBooksPipe,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
